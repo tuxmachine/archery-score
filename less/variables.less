@@ -38,28 +38,25 @@
 
 // Links
 // -------------------------
-@linkColor:             @red;
+@linkColor:             @blue;
 @linkColorHover:        darken(@linkColor, 15%);
 
 
 // Typography
 // -------------------------
-@import url(http://fonts.googleapis.com/css?family=Jura:600|Strait);
 
 @sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
 @monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
-@fancyFontFamily:       Strait, sans-serif;
-@fancyFontHeaders:      Jura, sans-serif;
 
 @baseFontSize:          14px;
-@baseFontFamily:        @fancyFontFamily;
+@baseFontFamily:        @sansFontFamily;
 @baseLineHeight:        24px;
 @altFontFamily:         @serifFontFamily;
 
-@headingsFontFamily:    @fancyFontHeaders; // empty to use BS default, @baseFontFamily
+@headingsFontFamily:    @baseFontFamily; // empty to use BS default, @baseFontFamily
 @headingsFontWeight:    600;    // instead of browser default, bold
-@headingsColor:         @red; // empty to use BS default, @textColor
+@headingsColor:         @black; // empty to use BS default, @textColor
 
 
 // Component sizing
