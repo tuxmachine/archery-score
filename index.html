@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app ng-controller="ArcherCtrl">
+  <head>
+    <title>ArcheryMatch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet/less" href="less/custom.less">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="js/less.js"></script>
+    <script src="js/coffee-script.js"></script>
+    <script src="js/ng-app.js"></script>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container" >
+      <ul class="nav nav-tabs">
+        <li ng-repeat="archer in archers" >
+          <a href="#{{ archer.name }}" data-toggle="tab" ng-click="updateActiveArcher(archer.name)">{{ archer.name + ' (' + archer.total + ')' }}</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div ng-repeat="archer in archers" id="{{ archer.name }}" class="tab-pane">
+          <table class="table table-condensed table-striped">
+            <tr ng-repeat="set in archer.sets">
+              <td ng-repeat="shot in set">{{ shot }}</td>
+              <th>{{ countShots(set) }}</th>
+            </tr>
+          </table>
+          <h2>Stats</h2>
+          <dl>
+            <dt>Total</dt>
+            <dd>{{archer.total}}</dd>
+            <dt>Sets</dt>
+            <dd>{{ archer.sets.length }}</dd>
+            <dt>Avg per set</dt>
+            <dd>{{ archer.total / archer.sets.length }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-fixed-bottom">
+      <div class="container navbar-inner">
+        <span class="brand">Add Set</span>
+        <div class="navbar-form form-inline">
+          <input type="text" placeholder="Enter shots like: 9 9 8 ..." ng-model="new_set_values">
+          <a href="#" class="btn btn-success" ng-click="addSet()">Add</a>
+        </div>
+      </div>
+    </div>
+    <script src="js/bootstrap-tab.js"></script>
+</body>
+</html>
