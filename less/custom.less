@@ -1,2 +1,29 @@
 @import "bootstrap.less";
 @import "responsive.less";
+
+.slider {
+  position: absolute;
+  min-height: 100%;
+  left: -1500px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.95);
+  z-index: 100;
+
+  ul {
+    width: 150px;
+  }
+}
+
+.open {
+  left: 0px !important;
+}
+
+@media all and (min-width: 768px) {
+  body {
+    padding-top: 50px;
+  }
+}
+
+.container {
+  position: relative;
+}

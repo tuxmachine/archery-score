@@ -1,37 +1,64 @@
+class Set
+  this.shots
+  this.total
+
+  constructor: ()->
+    this.shots = []
+    this.total = 0
+
+class Archer
+  this.sets
+  this.total
+  this.averageSet
+  this.name
+  currentSet = new Set()
+
+  constructor: (_name='')->
+    this.name = _name
+    this.sets = [new Set()]
+    this.total = 0
+    this.averageSet = 0
+    currentSet = this.sets[this.sets.length - 1]
+
+  addShot: (value)->
+    console.log "adding "+ value
+    currentSet.shots.push value
+    currentSet.total += value
+    this.total += value
+
+  finishSet: ()->
+    this.sets.push new Set()
+    currentSet = this.sets[this.sets.length - 1]
+    this.averageSet = (this.total / (this.sets.length - 1)).toFixed(1)
+
 ArcherCtrl = ($scope)->
-  $scope.archers = [
-    { name: 'ArcherA', sets: [], total: 0},
-    { name: 'ArcherB', sets: [], total: 0},
-    { name: 'ArcherC', sets: [], total: 0},
-    { name: 'ArcherD', sets: [], total: 0},
-    { name: 'ArcherE', sets: [], total: 0}
-  ]
+  $scope.archers = [new Archer('ArcherA')]
 
-  $scope.activeArcher = ''
-  $scope.new_set_values = ''
+  $scope.activeArcher = $scope.archers[0]
 
-  $scope.countShots = (set) ->
-    total = 0
-    set.forEach (shot)->
-      total += parseInt(shot,10)
-    return total
+  $scope.menuStatus = ''
 
-  $scope.updateActiveArcher = (archerName) ->
-    $scope.activeArcher = archerName
-    console.log "updating active archer: " + archerName
-    console.log "now set to: " + $scope.activeArcher
+  $scope.toggleMenu = () ->
+    if $scope.menuStatus == ''
+      $scope.menuStatus = 'open'
+    else
+      $scope.menuStatus = ''
 
-  $scope.addSet = () ->
-    if $scope.activeArcher == ''
-      alert "Please select archer first"
-    $scope.archers.forEach (archer)->
-      console.log 'testing: ' + archer.name
-      if archer.name == $scope.activeArcher
-        console.log("found him")
-        console.log "Adding set: " + $scope.new_set_values
-        new_set = $scope.new_set_values.split(' ')
-        archer.sets.push new_set
-        console.log archer.sets
-        new_set.forEach (shot)->
-          archer.total += parseInt shot,10
+  $scope.updateActiveArcher = (archerIndex) ->
+    $scope.activeArcher = $scope.archers[archerIndex]
+    console.log "archer set to: " + $scope.activeArcher.name
+    $scope.menuStatus = ''
 
+  $scope.newArcher = ()->
+    name = prompt("Name of archer?")
+    $scope.archers.push(new Archer(name))
+    console.log "added new archer: "+name
+
+  $scope.addShot = (value)->
+    $scope.activeArcher.addShot(value)
+
+  $scope.finishSet = ()->
+    $scope.activeArcher.finishSet()
+
+  $scope.rename = ()->
+    $scope.activeArcher.name = prompt "Enter new name"
