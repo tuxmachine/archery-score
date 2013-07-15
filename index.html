@@ -1,85 +1,87 @@
 <!DOCTYPE html>
-<html ng-app ng-controller="ArcherCtrl" manifest="archery-score.appcache">
+<html ng-app ng-controller="ArcherCtrl">
   <head>
     <title>ArcheryMatch</title>
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="apple-touch-icon" href="icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css">
+    <script src="js/sugar.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/ng-app.js"></script>
     <script type="application/x-javascript"> 
-      addEventListener("load", function() { 
-        setTimeout(updateLayout, 0); 
-      }, false); 
+      var layoutManager = function() {
+        var currentWidth = 0;
+        var update = function() {
+          if (window.innerWidth != currentWidth) {
+            currentWidth = window.innerWidth;
+            var orient = currentWidth == 320 ? "profile" : "landscape";
+            document.body.setAttribute("orient", orient);
+            setTimeout(function() {
+              window.scrollTo(0, 1);
+            }, 100);
+          }
+        };
+        setInterval( update(), 100);
+      };
 
-      var currentWidth = 0; 
-
-      function updateLayout() { 
-        if (window.innerWidth != currentWidth) { 
-          currentWidth = window.innerWidth; 
-          var orient = currentWidth == 320 ? "profile" : "landscape"; 
-          document.body.setAttribute("orient", orient); 
-          setTimeout(function() { 
-            window.scrollTo(0, 1); 
-          }, 100); 
-        } 
-      } 
-
-      setInterval(updateLayout, 100); 
+      addEventListener("load", function() {
+        layoutManager();
+      }, false);
     </script> 
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
       <div class="container navbar-inner">
-        <a ng-click="toggleMenu()" class="brand">Menu</a>
+        <a ng-click="toggle_menu()" class="brand">Menu</a>
         <div class="navbar-form form-inline">
           <div class="btn-group">
-            <a ng-click="addShot(0)" class="btn btn-small">0</a>
-            <a ng-click="addShot(1)" class="btn btn-small">1</a>
-            <a ng-click="addShot(2)" class="btn btn-small">2</a>
+            <a ng-click="add_shot(0)" class="btn btn-small">0</a>
+            <a ng-click="add_shot(1)" class="btn btn-small">1</a>
+            <a ng-click="add_shot(2)" class="btn btn-small">2</a>
           </div>
           <div class="btn-group">
-            <a ng-click="addShot(3)" class="btn btn-small btn-inverse">3</a>
-            <a ng-click="addShot(4)" class="btn btn-small btn-inverse">4</a>
+            <a ng-click="add_shot(3)" class="btn btn-small btn-inverse">3</a>
+            <a ng-click="add_shot(4)" class="btn btn-small btn-inverse">4</a>
           </div>
           <div class="btn-group">
-            <a ng-click="addShot(5)" class="btn btn-small btn-primary">5</a>
-            <a ng-click="addShot(6)" class="btn btn-small btn-primary">6</a>
+            <a ng-click="add_shot(5)" class="btn btn-small btn-primary">5</a>
+            <a ng-click="add_shot(6)" class="btn btn-small btn-primary">6</a>
           </div>
           <div class="btn-group">
-            <a ng-click="addShot(7)" class="btn btn-small btn-danger">7</a>
-            <a ng-click="addShot(8)" class="btn btn-small btn-danger">8</a>
+            <a ng-click="add_shot(7)" class="btn btn-small btn-danger">7</a>
+            <a ng-click="add_shot(8)" class="btn btn-small btn-danger">8</a>
           </div>
           <div class="btn-group">
-            <a ng-click="addShot(9)" class="btn btn-small btn-warning">9</a>
-            <a ng-click="addShot(10)" class="btn btn-small btn-warning">10</a>
+            <a ng-click="add_shot(9)" class="btn btn-small btn-warning">9</a>
+            <a ng-click="add_shot(10)" class="btn btn-small btn-warning">10</a>
           </div>
-          <a ng-click="finishSet()" class="btn btn-small btn-success">close</a>
+          <a ng-click="close_set()" class="btn btn-small btn-success">close</a>
         </div>
       </div>
     </div>
     <div class="container">
-      <div class="slider {{ menuStatus }}">
+      <div class="slider {{ menu_status }}">
         <ul class="nav nav-tabs nav-stacked">
           <li ng-repeat="archer in archers" >
-            <a href="#" ng-click="updateActiveArcher(archers.indexOf(archer))">{{ archer.name }}</a>
+            <a href="#" ng-click="update_active_archer(archers.indexOf(archer))">{{ archer.get_name() }}</a>
           </li>
-          <li><a ng-click="newArcher()">Add archer</a></li>
+          <li><a ng-click="new_archer()">Add archer</a></li>
         </ul>
       </div>
       <table class="table table-condensed table-striped">
-        <tr ng-repeat="set in activeArcher.sets">
+        <tr ng-repeat="set in active_archer.get_sets()">
           <th>{{ set.total }}</th>
           <td ng-repeat="shot in set.shots">{{ shot }}</td>
         </tr>
       </table>
       <dl>
         <dt>Archer</dt>
-        <dd>{{ activeArcher.name }} <a href="#" ng-click="rename()"><i class="icon-pencil"></i></a></dd>
+        <dd>{{ active_archer.get_name() }} <a href="#" ng-click="rename()"><i class="icon-pencil"></i></a></dd>
         <dt>Total / avg per set</dt>
-        <dd>{{activeArcher.total}} / {{ activeArcher.averageSet }}</dd>
+        <dd>{{active_archer.get_total()}} / {{ active_archer.get_average() }}</dd>
       </dl>
     </div>
   </body>
