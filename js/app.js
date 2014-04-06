@@ -56,7 +56,7 @@ app.controller('SetupCtrl', ['$scope', 'MatchFactory', '$stateParams', '$locatio
 	};
 }]);
 
-app.controller('MatchCtrl', ['$scope', 'MatchFactory', '$stateParams', '$location', function($scope, MatchFactory, $stateParams, $location){
+app.controller('MatchCtrl', ['$scope', 'MatchFactory', '$stateParams', '$location', '$ionicSideMenuDelegate', function($scope, MatchFactory, $stateParams, $location, $ionicSideMenuDelegate){
 	$scope.match = MatchFactory.getMatch($stateParams.id);
 	$scope.archerIndex = 0;
 	$scope.shots = '';
@@ -92,9 +92,11 @@ app.controller('MatchCtrl', ['$scope', 'MatchFactory', '$stateParams', '$locatio
 		switch(destination) {
 			case 'next':
 				$scope.archerIndex = ($scope.archerIndex < $scope.match.archers.length-1) ? $scope.archerIndex + 1 : $schope.archerIndex;
+				$ionicSideMenuDelegate.toggleLeft();
 				break;
 			case 'previous': 
 				$scope.archerIndex = ($scope.archerIndex > 0) ? $scope.archerIndex - 1 : 0;
+				$ionicSideMenuDelegate.toggleLeft();
 				break;
 			default: 
 				var tmpIndex = _.findIndex($scope.match.archers, function(archer) {
@@ -102,6 +104,7 @@ app.controller('MatchCtrl', ['$scope', 'MatchFactory', '$stateParams', '$locatio
 				});
 				if(tmpIndex >= 0) {
 					$scope.archerIndex = tmpIndex;
+					$ionicSideMenuDelegate.toggleLeft();
 				};
 				break;
 		}
