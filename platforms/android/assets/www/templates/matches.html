@@ -1,0 +1,9 @@
+<div class="bar bar-header bar-stable">
+  <h1 class="title">Wedstrijden</h1>
+</div>
+
+<ul class="list">
+	<li ng-repeat="match in matches" class="item"><a ng-href="#/match/{{match.id}}">{{ match.id }}</a></li>
+</ul>
+
+<a ng-href="/#/match/setup" class="button button-block button-calm">Nieuwe match</a>
