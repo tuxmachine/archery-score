@@ -1,0 +1,9 @@
+<ion-header-bar class="bar-stable">
+  <h1 class="title">Wedstrijden</h1>
+</ion-header-bar>
+<ion-content>
+	<div class="list">
+		<a ng-repeat="match in matches" class="item" ui-sref="view({id: match.id})">{{ match.date }}</a>
+		<a class="item" ui-sref="new">Nieuwe match</a>
+	</div>
+</ion-content>

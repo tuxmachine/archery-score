@@ -1,11 +1,18 @@
 CACHE MANIFEST
-# Version 2013-07-15
+# Version 2014-04-06
 
 index.html
-css/style.css
-js/angular.min.js
-js/sugar.min.js
-js/ng-app.js
+templates/matches.html
+templates/match.html
+templates/match_settings.html
+js/app.js
+js/lodash.js
+js/moment.min.js
 icon.png
-img/glyphicons-halflings-white.png
-img/glyphicons-halflings.png
+lib/ionic/css/ionic.min.css
+lib/ionic/fonts/ionicons.ttf
+lib/ionic/fonts/ionicons.eot
+lib/ionic/fonts/ionicons.svg
+lib/ionic/fonts/ionicons.woff
+lib/ionic/js/ionic.bundle.js
+
