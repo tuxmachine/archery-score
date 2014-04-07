@@ -14,5 +14,5 @@ lib/ionic/fonts/ionicons.svg
 lib/ionic/fonts/ionicons.woff
 lib/ionic/fonts/ionicons.ttf
 lib/ionic/fonts/ionicons.eot
-lib/ionic/js/ionic.bundle.js
+lib/ionic/js/ionic.bundle.min.js
 
