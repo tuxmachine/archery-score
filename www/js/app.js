@@ -1,4 +1,5 @@
 var app = angular.module('ArcheryScore', ['ionic']);
+moment.lang('nl');
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider.
@@ -44,7 +45,7 @@ app.controller('SetupCtrl', ['$scope', 'MatchFactory', '$stateParams', '$locatio
 	};
 	
 	$scope.addArcher = function() {
-		$scope.match.archers.push(MatchFactory.newArcher());
+		$scope.match.archers.push(MatchFactory.newArcher("Archer " + ($scope.match.archers.length + 1)));
 	};
 	
 	$scope.deleteMatch = function() {
@@ -54,12 +55,19 @@ app.controller('SetupCtrl', ['$scope', 'MatchFactory', '$stateParams', '$locatio
 			$location.url('/matches');
 		}
 	};
+	
+	$scope.deleteArcher = function(index) {
+		var c = confirm("Are you sure?");
+		if(c) {
+			$scope.match.archers.splice(index,1);
+		}
+	};
 }]);
 
 app.controller('MatchCtrl', ['$scope', 'MatchFactory', '$stateParams', '$location', '$ionicSideMenuDelegate', function($scope, MatchFactory, $stateParams, $location, $ionicSideMenuDelegate){
 	$scope.match = MatchFactory.getMatch($stateParams.id);
 	$scope.archerIndex = 0;
-	$scope.shots = '';
+	$scope.data = {shots: ''};
 	if($scope.match == undefined) {
 		$location.url('/matches');
 	}
@@ -75,7 +83,7 @@ app.controller('MatchCtrl', ['$scope', 'MatchFactory', '$stateParams', '$locatio
 		});
 		$scope.match.archers[$scope.archerIndex].total += total;
 		$scope.match.archers[$scope.archerIndex].sets.push({shots: points, total: total});
-		$scope.shots = '';
+		$scope.data.shots = '';
 		MatchFactory.setMatch($scope.match);
 	};
 	
@@ -136,10 +144,10 @@ app.factory('MatchFactory', function() {
 		var date = new Date()
 		return {
 			id: date.getTime().toString(16).toUpperCase(),
-			date: moment().format('l H:mm'),
+			date: moment().format('dd D MMM YYYY (H:mm)'),
 			archers: [
 				{
-					name: "Archer name",
+					name: "Archer 1",
 					total: 0,
 					sets: []
 				}
